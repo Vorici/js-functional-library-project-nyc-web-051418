@@ -92,25 +92,55 @@ fi = (function() {
       return counter;
     },
 
-    first: function(array, [n]) {
-      let index = [n][0];
-      return array.slice(0, index);
+    first: function(array, n) {
+
+        if (typeof n === 'undefined'){
+          return array.slice(0,1)[0];
+        } else {
+          return array.slice(0,n);
+        }
 
     },
 
-    last: function(collection, predicate) {
-      let counter = 0;
-      if(collection instanceof Array === true){
-        for (index = 0; index < collection.length; index++){
-            counter++;
+    last: function(array, n) {
+
+        if (typeof n === 'undefined'){
+          return array.slice(-1)[0];
+        } else {
+          return array.slice(-n);
         }
-      } else {
-        for (const key in collection){
-          counter++
+
+    },
+
+    compact: function(array) {
+      const newFindArray = [];
+        for (index = 0; index < array.length; index++){
+         if (array[index]){
+            newFindArray.push(array[index]);
+         }
         }
+      return newFindArray;
+    },
+
+    sortBy: function(array, iteratee) {
+      const newFindArray = [];
+
+      const sorter = function(val1, val2){
+          if (typeof array[0] === "number" ){
+            return (val1 - val2);
+        } else {
+           return val1.localeCompare(val2)
+         }
       }
-      return counter;
+        for (index = 0; index < array.length; index++){
+
+          newFindArray.push(iteratee(array[index]));
+
+        }
+      return newFindArray.sort(sorter);
     },
+
+
 
   }
 })()
